@@ -79,10 +79,6 @@ export default {
       let translateY = Math.min(this.imageHeight - RESERVED_HEIGHT, -newY)
       let percent = Math.abs(newY / this.imageHeight)
       this.$refs.layer.style['transform'] = `translate3d(0,${-translateY}px,0)`
-      if (newY > 0) {
-        scale = 1 + percent
-        zIndex = 10
-      }
       if (this.imageHeight - RESERVED_HEIGHT < -newY) {
         zIndex = 10
         this.$refs.bgImage.style.paddingTop = 0
@@ -92,8 +88,11 @@ export default {
         this.$refs.bgImage.style.paddingTop = '70%'
         this.$refs.bgImage.style.height = 0
       }
-      console.log(scale)
-      this.$refs.bgImage.style['transfrom'] = `scale(${scale})`
+      if (newY > 0) {
+        scale = 1 + percent
+        zIndex = 10
+      }
+      this.$refs.bgImage.style['transform'] = `scale(${scale})`
       this.$refs.bgImage.style.zIndex = zIndex
     }
   },
