@@ -1,6 +1,7 @@
 # vue-music
 
 > a music app
+> 高仿vue开发音乐APP实战学习，更新了其中的请求接口方式。
 
 ## Build Setup
 
