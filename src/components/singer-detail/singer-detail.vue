@@ -34,6 +34,10 @@ export default {
   },
   methods: {
     _getSingerDetail(singer) {
+      if (!this.singer.id) {
+        this.$router.push('/singer')
+        return
+      }
       getSingerDetail(singer.id).then(res => {
         if (res.code === ERR_OK) {
           this.song = this._normalizeSongs(res.data.list)
@@ -54,11 +58,10 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../../common/stylus/variable.styl'
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  .slide-enter-active, .slide-leave-active
+    transition: all 0.3s
 
-.slide-enter-active, .slide-leave-active
-  transition: all 0.3s
-.slide-enter, .slide-leave-to
-  transform: translate3d(100%, 0, 0)
+  .slide-enter, .slide-leave-to
+    transform: translate3d(100%, 0, 0)
 </style>

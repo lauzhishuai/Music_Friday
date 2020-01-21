@@ -23,13 +23,12 @@ export function getSingersList() {
 export function getSingerDetail(singerid) {
   let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
   let data = Object.assign({}, commonParams, {
-    g_tk: 1576475597,
     hostUin: 0,
-    platform: 'yqq',
     needNewCode: 0,
+    platform: 'yqq',
     order: 'listen',
     begin: 0,
-    num: 100,
+    num: 80,
     songstatus: 1,
     singermid: singerid
   })
