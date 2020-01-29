@@ -5,16 +5,20 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <player></player>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import MyHeader from './components/my-header/my-header'
 import MyTab from './components/my-tab/my-tab'
+import Player from './components/player/player'
+
 export default {
   components: {
     MyHeader,
-    MyTab
+    MyTab,
+    Player
   }
 }
 </script>
