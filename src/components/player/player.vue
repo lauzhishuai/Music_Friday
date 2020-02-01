@@ -28,6 +28,13 @@
           </div>
         </div>
         <div class="bottom">
+          <div class="progress-wrapper">
+            <span class="time time-l">{{format(currentTime)}}</span>
+            <div class="progress-bar-wrapper">
+              <progress-bar :percent="percent"></progress-bar>
+            </div>
+            <span class="time time-r">{{format(currentSong.duration)}}</span>
+          </div>
           <div class="operators">
             <div class="icon i-left">
               <i class="icon-sequence"></i>
@@ -65,7 +72,13 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url" @play="ready" @error="error"></audio>
+    <audio
+      ref="audio"
+      :src="currentSongUrl"
+      @canplay="ready"
+      @error="error"
+      @timeupdate="updateTime"
+    ></audio>
   </div>
 </template>
 
@@ -73,13 +86,16 @@
 import { mapGetters, mapMutations } from 'vuex'
 import animations from 'create-keyframe-animation'
 import { prefixStyle } from '@/common/js/dom'
+import ProgressBar from '@/base/progress-bar/progress-bar'
 
 const transform = prefixStyle('transform')
 
 export default {
   data() {
     return {
-      songReady: false
+      songReady: false,
+      currentTime: 0,
+      currentSongUrl: ''
     }
   },
   computed: {
@@ -91,6 +107,9 @@ export default {
     },
     miniIcon() {
       return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
+    },
+    percent() {
+      return this.currentTime / this.currentSong.duration
     },
     ...mapGetters([
       'fullScreen',
@@ -188,6 +207,15 @@ export default {
     error() {
       this.songReady = true
     },
+    updateTime(e) {
+      this.currentTime = e.target.currentTime
+    },
+    format(interval) {
+      interval = interval | 0
+      const minute = (interval / 60) | 0
+      const second = this._pad(interval % 60)
+      return `${minute}:${second}`
+    },
     _getPosAndeScale() {
       const targetWidth = 40
       const paddingLeft = 40
@@ -199,6 +227,14 @@ export default {
       const y = window.innerHeight - paddingTop - width / 2 - paddingBottom
       return { x, y, scale }
     },
+    _pad(num, n = 2) {
+      let len = num.toString().length
+      while (len < n) {
+        num = '0' + num
+        len++
+      }
+      return num
+    },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
       setPlayingState: 'SET_PLAYING_STATE',
@@ -206,7 +242,17 @@ export default {
     })
   },
   watch: {
-    currentSong() {
+    currentSong(newSong, oldSong) {
+      newSong
+        .getSongUrl()
+        .then(url => {
+          this.currentSongUrl = url
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    currentSongUrl() {
       this.$nextTick(() => {
         this.$refs.audio.play()
       })
@@ -217,6 +263,9 @@ export default {
         newPlaying ? audio.play() : audio.pause()
       })
     }
+  },
+  components: {
+    ProgressBar
   }
 }
 </script>
