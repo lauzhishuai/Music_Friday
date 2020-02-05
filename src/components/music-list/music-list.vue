@@ -120,7 +120,6 @@ export default {
     },
     playRandom() {
       this.selectPlayRandom({ list: this.songs })
-      console.log(this.sequenceList)
     },
     ...mapActions(['selectPlay', 'selectPlayRandom'])
   }
