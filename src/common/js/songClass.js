@@ -1,6 +1,7 @@
 import {
   getSongVkey,
-  getSongURL
+  getSongURL,
+  getLyrics
 } from '@/api/song'
 import {
   ERR_OK
@@ -44,6 +45,19 @@ export default class Song {
           // this.url = currentSongUrl
           return Promise.resolve(currentSongUrl)
         }
+      }
+    }).catch((err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  // 获取歌词
+  getLyrics() {
+    getLyrics(this.mid).then((res) => {
+      if (res.retcode === ERR_OK) {
+        // this.lyric = Base64.decode(res.lyric)
+        console.log(res.lyric)
+        Promise.resolve(this.lyric)
       }
     }).catch((err) => {
       return Promise.reject(err)

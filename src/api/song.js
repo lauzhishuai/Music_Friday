@@ -31,3 +31,22 @@ export function getSongVkey(songmid) {
 export function getSongURL(songmid, vkey) {
   return `http://dl.stream.qqmusic.qq.com/C400${songmid}.m4a?vkey=${vkey}&guid=3009522126&uin=0&fromtag=66`
 }
+
+export function getLyrics(mid) {
+  var url = '/api/lyrics'
+  var data = Object.assign({}, commonParams, {
+    songmid: mid,
+    platform: 'yqq',
+    hostUin: 0,
+    needNewCode: 0,
+    categoryId: 10000000,
+    pcachetime: +new Date(),
+    format: 'json'
+  })
+
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data)
+  })
+}
