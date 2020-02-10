@@ -32,8 +32,8 @@ export function getSongURL(songmid, vkey) {
   return `http://dl.stream.qqmusic.qq.com/C400${songmid}.m4a?vkey=${vkey}&guid=3009522126&uin=0&fromtag=66`
 }
 
-export function getLyrics(mid) {
-  var url = '/api/lyrics'
+export function getLyric(mid) {
+  var url = '/lyric'
   var data = Object.assign({}, commonParams, {
     songmid: mid,
     platform: 'yqq',

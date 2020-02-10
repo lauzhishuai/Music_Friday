@@ -311,7 +311,7 @@ export default {
     currentSongUrl() {
       this.$nextTick(() => {
         this.$refs.audio.play()
-        this.currentSong.getLyrics()
+        this.currentSong.getLyric()
       })
     },
     playing(newPlaying) {

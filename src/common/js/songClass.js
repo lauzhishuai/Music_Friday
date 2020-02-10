@@ -1,7 +1,7 @@
 import {
   getSongVkey,
   getSongURL,
-  getLyrics
+  getLyric
 } from '@/api/song'
 import {
   ERR_OK
@@ -52,8 +52,8 @@ export default class Song {
   }
 
   // 获取歌词
-  getLyrics() {
-    getLyrics(this.mid).then((res) => {
+  getLyric() {
+    getLyric(this.mid).then((res) => {
       if (res.retcode === ERR_OK) {
         // this.lyric = Base64.decode(res.lyric)
         console.log(res.lyric)
